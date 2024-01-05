@@ -1,0 +1,23 @@
+.app-wrapper {
+	display: grid;
+	grid-template-rows: 60px 1fr;
+	grid-template-columns: 2fr 10fr;
+}
+
+.header {
+	grid-column: span 2;
+	background-color: #90d8ee;
+}
+.header img {
+	width: 40px;
+}
+.nav {
+	background-color: #a8e5f8;
+}
+.content {
+	background-color: #ccf1fc;
+}
+
+.content img {
+	width: 500px;
+}
