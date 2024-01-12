@@ -1,0 +1,13 @@
+.nav {
+	background-color: #a8e5f8;
+	padding: 20px;
+	
+}
+.item a {
+	color: white;
+	text-decoration: none;
+}
+
+li .active {
+	color: red
+}
