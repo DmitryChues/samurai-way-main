@@ -2,20 +2,16 @@ import React, { FC } from 'react';
 import s from './Post.module.css'
 import { Post } from './Post/Post';
 
-type postsDataType = {
+export type postsDataType = {
 	message: string
 	likes: number
 }
 
-type PostPropsType = {}
+type PostPropsType = {
+	postsData: postsDataType[]
+}
 
-export const MyPosts: FC<PostPropsType> = (props) => {
-	const postsData: postsDataType[] = [
-		{ message: "Hi, how are you?", likes: 12 },
-		{ message: "It's my first post", likes: 25 },
-		{ message: "Hi, how are you?", likes: 12 },
-		{ message: "It's my first post", likes: 25 },
-	]
+export const MyPosts: FC<PostPropsType> = ({ postsData }) => {
 
 	const postElements: JSX.Element[] = postsData.map(p => <Post message={p.message} likes={p.likes} />)
 	return (
