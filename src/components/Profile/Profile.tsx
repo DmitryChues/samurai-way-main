@@ -1,17 +1,20 @@
 import React, { FC } from 'react';
 import classes from './Profile.module.css'
-import { MyPosts, postsDataType } from './MyPosts/MyPosts';
+import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
+import { profilePageType } from '../../redux/state';
 
 type ProfilePropsType = {
-	postsData: postsDataType[]
+	state: profilePageType
+	addPost: () => void
+	updateNewPostText: (newPostText: string) => void
 }
 
-export const Profile: FC<ProfilePropsType> = ({ postsData }) => {
+export const Profile: FC<ProfilePropsType> = ({ state: { postsData, newPostText }, addPost, updateNewPostText }) => {
 	return (
 		<div className={classes.content}>
 			<ProfileInfo />
-			<MyPosts postsData={postsData} />
+			<MyPosts addPost={addPost} updateNewPostText={updateNewPostText} postsData={postsData} newPostText={newPostText} />
 		</div>
 	);
 };

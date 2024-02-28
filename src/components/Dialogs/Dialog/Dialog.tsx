@@ -10,8 +10,18 @@ type DialogPropsType = {
 export const Dialog: FC<DialogPropsType> = ({ name, id }) => {
 	let path = `/dialogs/${id}`;
 	return (
-		<li className={s.dialog}>
-			<NavLink to={path}>{name}</NavLink>
+		<li>
+			<NavLink activeClassName={s.active} to={path}>
+
+				<div className={s.dialog}>
+					<div className={s.ava}>
+						<img src="https://illustrators.ru/uploads/illustration/image/1232594/%D1%8B%D1%8B%D1%8B%D1%8B.png" alt="oops" />
+					</div>
+					<span>{name}</span>
+				</div>
+
+			</NavLink>
 		</li>
+
 	)
 }

@@ -1,7 +1,19 @@
 .dialog {
-
+	display: flex;
+	gap: 5px;
 }
 
-.dialog.active {
+li .active {
 	color: red
+}
+
+.ava {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.ava img {
+	width: 100%;
 }

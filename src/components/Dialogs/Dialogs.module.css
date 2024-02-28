@@ -1,12 +1,31 @@
 .title {
-
+	font-family: Inter;
+	font-size: 22px;
+	font-weight: 600;
+	margin: 0px 0px 20px 0px;
 }
 
 .dialogs {
 	display: grid;
 	grid-template-columns: 2fr 10fr;
+	gap: 30px;
 }
 
 .dialog_items {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
 
+.messages__wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	row-gap: 20px;
+}
+
+.messages {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
 }

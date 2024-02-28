@@ -3,33 +3,36 @@ import './App.css';
 import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
 import { Profile } from './components/Profile/Profile';
-import { Dialogs, dialogsDataType, messagesDataType } from './components/Dialogs/Dialogs';
+import { Dialogs } from './components/Dialogs/Dialogs';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
-import { postsDataType } from './components/Profile/MyPosts/MyPosts';
+import { stateType } from './redux/state';
+import { Friends } from './components/Friends/Friends';
 
 type AppPropsType = {
-	dialogsData: dialogsDataType[]
-	messagesData: messagesDataType[]
-	postsData: postsDataType[]
+	state: stateType
+	addPost: () => void
+	updateNewPostText: (newPostText: string) => void
+	sendMessage: () => void
+	updateNewMessage: (newMessage: string) => void
 }
 
-const App: FC<AppPropsType> = ({ dialogsData, messagesData, postsData }) => {
+const App = (props: AppPropsType) => {
+	const { state: { dialogsPage, profilePage, friendsPage }, addPost, updateNewPostText, sendMessage, updateNewMessage } = props
 	return (
 		<BrowserRouter>
 			<div className='app-wrapper'>
 				<Header />
-				<Navbar />
+				<Navbar state={friendsPage} />
 				<div className='app-wrapper-content'>
-					<Route path='/dialogs' render={() => <Dialogs dialogsData={dialogsData} messagesData={messagesData} />} />
-					<Route path='/profile' render={() => <Profile postsData={postsData} />} />
-					<Route path='/news' component={News} />
-					<Route path='/music' component={Music} />
-					<Route path={'/settings'} component={Settings} />
-					{/* <Profile /> */}
-					{/* <Dialogs /> */}
+					<Route path='/dialogs' render={() => <Dialogs updateNewMessage={updateNewMessage} sendMessage={sendMessage} state={dialogsPage} />} />
+					<Route path='/profile' render={() => <Profile updateNewPostText={updateNewPostText} addPost={addPost} state={profilePage} />} />
+					<Route path='/news' render={() => <News />} />
+					<Route path='/music' render={() => <Music />} />
+					<Route path='/settings' render={() => <Settings />} />
+					<Route path='/friends' render={() => <Friends />} />
 				</div>
 			</div>
 		</BrowserRouter>
