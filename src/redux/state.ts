@@ -1,5 +1,7 @@
+import { sendMessageAC, updateNewMessageAC } from "./dialogsReducer"
 import { dialogsReducer } from "./dialogsReducer"
 import { friendsReducer } from "./friendsReducer"
+import { addPostAC, updateNewPostTextAC } from "./profileReducer"
 import { profileReducer } from "./profileReducer"
 
 export type DialogsDataType = {
@@ -203,17 +205,3 @@ export let store: StoreType = {
 	}
 }
 
-export const addPostAC = () => ({ type: 'ADD-POST' } as const)
-export const updateNewPostTextAC = (newPostText: string) =>
-	({ type: 'UPDATE-NEW-POST-TEXT', newPostText } as const)
-export const sendMessageAC = () => ({ type: 'SEND-MESSAGE' } as const)
-export const updateNewMessageAC = (newMessage: string) =>
-	({ type: 'UPDATE-NEW-MESSAGE', newMessage } as const)
-
-
-// let rerenderEntireTree = () => {
-// 	console.log('State changed')
-// }
-// export const subscribe = (observer: () => void) => {
-// 	rerenderEntireTree = observer
-// }

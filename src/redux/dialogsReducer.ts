@@ -16,4 +16,7 @@ export const dialogsReducer = (state: DialogsPageType, action: ActionType): Dial
 		default:
 			return state
 	}
-}
+};
+
+export const sendMessageAC = () => ({ type: 'SEND-MESSAGE' } as const)
+export const updateNewMessageAC = (newMessage: string) => ({ type: 'UPDATE-NEW-MESSAGE', newMessage } as const)
