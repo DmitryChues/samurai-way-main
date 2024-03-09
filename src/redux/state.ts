@@ -1,57 +1,89 @@
-type dialogsDataType = {
+import { dialogsReducer } from "./dialogsReducer"
+import { friendsReducer } from "./friendsReducer"
+import { profileReducer } from "./profileReducer"
+
+export type DialogsDataType = {
 	name: string
 	id: string
 }
 
-type messagesDataType = {
+export type MessagesDataType = {
 	id: string
 	message: string
 }
 
-export type postsDataType = {
+export type PostsDataType = {
 	message: string
 	likes: number
 	id: string
 }
 
-export type friendsDataType = {
+export type FriendsDataType = {
 	id: string
 	name: string
 	age: number
 	status: boolean
 }
 
-export type profilePageType = {
-	postsData: postsDataType[],
+export type ProfilePageType = {
+	postsData: PostsDataType[],
 	newPostText: string
 }
 
-export type dialogsPageType = {
-	dialogsData: dialogsDataType[]
-	messagesData: messagesDataType[]
+export type DialogsPageType = {
+	dialogsData: DialogsDataType[]
+	messagesData: MessagesDataType[]
 	newMessageText: string
 }
 
-export type friendsPageType = {
-	friendsData: friendsDataType[]
+export type FriendsPageType = {
+	friendsData: FriendsDataType[]
 }
 
-export type stateType = {
-	dialogsPage: dialogsPageType
-	profilePage: profilePageType
-	friendsPage: friendsPageType
+export type StateType = {
+	dialogsPage: DialogsPageType
+	profilePage: ProfilePageType
+	friendsPage: FriendsPageType
 }
 
+// ============== типы ACTION ====================
+// type AddPostActionType = {
+// 	type: 'ADD-POST'
+// }
+// type UpdateNewPostTextActionType = {
+// 	type: 'UPDATE-NEW-POST-TEXT'
+// 	newPostText: string
+// }
+// type SendMessageActionType = {
+// 	type: 'SEND-MESSAGE'
+// }
+// type UpdateNewMessageActionType = {
+// 	type: 'UPDATE-NEW-MESSAGE'
+// 	newMessage: string
+// }
+
+type AddPostActionType = ReturnType<typeof addPostAC>
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
+type SendMessageActionType = ReturnType<typeof sendMessageAC>
+type UpdateNewMessageActionType = ReturnType<typeof updateNewMessageAC>
+
+export type ActionType = AddPostActionType | UpdateNewPostTextActionType | SendMessageActionType | UpdateNewMessageActionType
+
+// ============== тип STORE ======================
 export type StoreType = {
-	_state: stateType
-	getState: () => stateType
-	addPost: () => void
-	updateNewPostText: (newPostText: string) => void
-	sendMessage: () => void
-	updateNewMessage: (newMessage: string) => void
+	_state: StateType
 	_onChange: () => void
+	getState: () => StateType
 	subscribe: (observer: () => void) => void
+
+	// addPost: () => void
+	// updateNewPostText: (newPostText: string) => void
+	// sendMessage: () => void
+	// updateNewMessage: (newMessage: string) => void
+
+	dispatch: (action: ActionType) => void
 }
+// ===============================================
 
 export let store: StoreType = {
 	_state: {
@@ -91,43 +123,93 @@ export let store: StoreType = {
 			]
 		}
 	},
-	getState() {
-		return this._state
-	},
-	addPost() {
-		const newPost: postsDataType = {
-			id: '5',
-			message: this._state.profilePage.newPostText,
-			likes: 0
-		}
-		this._state.profilePage.postsData.push(newPost)
-		this._state.profilePage.newPostText = ''
-		this._onChange()
-	},
-	updateNewPostText(newPostText: string) {
-		this._state.profilePage.newPostText = newPostText
-		this._onChange()
-	},
-	sendMessage() {
-		const newMessage: messagesDataType = {
-			message: this._state.dialogsPage.newMessageText,
-			id: '6'
-		}
-		this._state.dialogsPage.messagesData.push(newMessage)
-		this._state.dialogsPage.newMessageText = ''
-		this._onChange()
-	},
-	updateNewMessage(newMessage: string) {
-		this._state.dialogsPage.newMessageText = newMessage
-		this._onChange()
-	},
 	_onChange() {
 		console.log('state changed')
 	},
+
 	subscribe(observer) {
 		this._onChange = observer
+	},
+	getState() {
+		return this._state
+	},
+
+	// addPost() {
+	// 	const newPost: PostsDataType = {
+	// 		id: '5',
+	// 		message: this._state.profilePage.newPostText,
+	// 		likes: 0
+	// 	}
+	// 	this._state.profilePage.postsData.push(newPost)
+	// 	this._state.profilePage.newPostText = ''
+	// 	this._onChange()
+	// },
+	// updateNewPostText(newPostText: string) {
+	// 	this._state.profilePage.newPostText = newPostText
+	// 	this._onChange()
+	// },
+	// sendMessage() {
+	// 	const newMessage: MessagesDataType = {
+	// 		message: this._state.dialogsPage.newMessageText,
+	// 		id: '6'
+	// 	}
+	// 	this._state.dialogsPage.messagesData.push(newMessage)
+	// 	this._state.dialogsPage.newMessageText = ''
+	// 	this._onChange()
+	// },
+	// updateNewMessage(newMessage: string) {
+	// 	this._state.dialogsPage.newMessageText = newMessage
+	// 	this._onChange()
+	// },
+
+	dispatch(action: ActionType) {
+
+		this._state.profilePage = profileReducer(this._state.profilePage, action)
+		this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+		this._state.friendsPage = friendsReducer(this._state.friendsPage, action)
+		this._onChange()
+
+		// switch (action.type) {
+		// 	case 'ADD-POST':
+		// 		const newPost: PostsDataType = {
+		// 			id: '5',
+		// 			message: this._state.profilePage.newPostText,
+		// 			likes: 0
+		// 		}
+		// 		this._state.profilePage.postsData.push(newPost)
+		// 		this._state.profilePage.newPostText = ''
+		// 		this._onChange()
+		// 		break
+		// 	case 'UPDATE-NEW-POST-TEXT':
+		// 		this._state.profilePage.newPostText = action.newPostText
+		// 		this._onChange()
+		// 		break
+		// 	case 'SEND-MESSAGE':
+		// 		const newMessage: MessagesDataType = {
+		// 			message: this._state.dialogsPage.newMessageText,
+		// 			id: '6'
+		// 		}
+		// 		this._state.dialogsPage.messagesData.push(newMessage)
+		// 		this._state.dialogsPage.newMessageText = ''
+		// 		this._onChange()
+		// 		break
+		// 	case 'UPDATE-NEW-MESSAGE':
+		// 		this._state.dialogsPage.newMessageText = action.newMessage
+		// 		this._onChange()
+		// 		break
+		// 	default:
+		// 		break;
+		// }
 	}
 }
+
+export const addPostAC = () => ({ type: 'ADD-POST' } as const)
+export const updateNewPostTextAC = (newPostText: string) =>
+	({ type: 'UPDATE-NEW-POST-TEXT', newPostText } as const)
+export const sendMessageAC = () => ({ type: 'SEND-MESSAGE' } as const)
+export const updateNewMessageAC = (newMessage: string) =>
+	({ type: 'UPDATE-NEW-MESSAGE', newMessage } as const)
+
 
 // let rerenderEntireTree = () => {
 // 	console.log('State changed')

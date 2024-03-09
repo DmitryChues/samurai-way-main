@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import s from './Navbar.module.css'
 import { NavLink } from 'react-router-dom';
 import { FavoritedFriends } from './FavoritedFriends/FavoritedFriends';
-import { friendsPageType } from '../../redux/state';
+import { FriendsPageType } from '../../redux/state';
 
 type NavbarPropsType = {
-	state: friendsPageType
+	state: FriendsPageType
 }
 
 export const Navbar: FC<NavbarPropsType> = ({ state: { friendsData } }) => {

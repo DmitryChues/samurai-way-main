@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { friendsDataType } from '../../../redux/state';
+import { FriendsDataType } from '../../../redux/state';
 import s from './FavoritedFriends.module.css'
 import { NavLink } from 'react-router-dom';
 
 type FavoriteFriendsPropsType = {
-	state: friendsDataType[]
+	state: FriendsDataType[]
 }
 
 export const FavoritedFriends: FC<FavoriteFriendsPropsType> = ({ state }) => {

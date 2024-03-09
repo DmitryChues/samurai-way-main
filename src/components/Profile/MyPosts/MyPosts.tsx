@@ -1,30 +1,33 @@
 import React, { ChangeEvent, FC } from 'react';
 import s from './Post.module.css';
 import { Post } from './Post/Post';
-import { postsDataType } from '../../../redux/state';
+import { ActionType, PostsDataType, addPostAC, updateNewPostTextAC } from '../../../redux/state';
 
 type PostPropsType = {
-	postsData: postsDataType[]
-	addPost: () => void
-	updateNewPostText: (newPostText: string) => void
+	postsData: PostsDataType[]
+	// addPost: () => void
+	// updateNewPostText: (newPostText: string) => void
+	dispatch: (action: ActionType) => void
 	newPostText: string
 }
 
-export const MyPosts: FC<PostPropsType> = ({ postsData, addPost, newPostText, updateNewPostText }) => {
+export const MyPosts: FC<PostPropsType> = ({ postsData, newPostText, dispatch }) => {
 
 	const postElements: JSX.Element[] = postsData.map(p => <Post message={p.message} likes={p.likes} />)
 
 	// let newPostElement = React.createRef<HTMLTextAreaElement>()
-	let addPostHandler = (newPostText: string) => {
+	let addPostHandler = () => {
 		if (newPostText.trim() !== '') {
-			addPost()
+			dispatch(addPostAC())
+			// addPost()
 			// newPostElement.current.value = '';
 			// updateNewPostText('')
 		}
 	}
 	let onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		if (e.currentTarget.value) {
-			updateNewPostText(e.currentTarget.value)
+			dispatch(updateNewPostTextAC(e.currentTarget.value))
+			// updateNewPostText(e.currentTarget.value)
 		}
 	}
 	return (
@@ -32,7 +35,7 @@ export const MyPosts: FC<PostPropsType> = ({ postsData, addPost, newPostText, up
 			<h3>My posts</h3>
 			<div>
 				<textarea onChange={onChangeHandler} value={newPostText} />
-				<button onClick={() => addPostHandler(newPostText)}>Add posts</button>
+				<button onClick={addPostHandler}>Add posts</button>
 			</div>
 			<div>
 				{postElements}
