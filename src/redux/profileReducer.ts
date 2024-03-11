@@ -1,6 +1,30 @@
-import { ActionType, PostsDataType, ProfilePageType } from "./state";
+// ========================= типы к INITIAL STATE ==================================
+export type PostsDataType = {
+	message: string
+	likes: number
+	id: string
+}
+export type ProfilePageType = typeof initialState
 
-export const profileReducer = (state: ProfilePageType, action: ActionType): ProfilePageType => {
+// ========================= типы ACTION CREATOR ===================================
+type AddPostActionType = ReturnType<typeof addPostAC>
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
+
+type ActionType = AddPostActionType | UpdateNewPostTextActionType
+
+// ========================= объявление initialState ===============================
+let initialState = {
+	postsData: [
+		{ id: '1', message: "Hi, how are you?", likes: 12 },
+		{ id: '2', message: "It's my first post", likes: 25 },
+		{ id: '3', message: "Hi, how are you?", likes: 12 },
+		{ id: '4', message: "It's my first post", likes: 25 },
+	] as PostsDataType[],
+	newPostText: 'it-kamasutra.com'
+}
+
+// ========================== REDUCER ===============================================
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
 	switch (action.type) {
 		case 'ADD-POST':
 			const newPost: PostsDataType = {
@@ -8,12 +32,9 @@ export const profileReducer = (state: ProfilePageType, action: ActionType): Prof
 				message: state.newPostText,
 				likes: 0
 			}
-			state.postsData.push(newPost)
-			state.newPostText = ''
-			return state
+			return { ...state, postsData: [...state.postsData, newPost], newPostText: '' }
 		case 'UPDATE-NEW-POST-TEXT':
-			state.newPostText = action.newPostText
-			return state
+			return { ...state, newPostText: action.newPostText }
 		default:
 			return state
 	}

@@ -1,14 +1,11 @@
 import React, { FC } from 'react';
 import s from './Navbar.module.css'
 import { NavLink } from 'react-router-dom';
-import { FavoritedFriends } from './FavoritedFriends/FavoritedFriends';
-import { FriendsPageType } from '../../redux/state';
 
 type NavbarPropsType = {
-	state: FriendsPageType
 }
 
-export const Navbar: FC<NavbarPropsType> = ({ state: { friendsData } }) => {
+export const Navbar: FC<NavbarPropsType> = () => {
 	return (
 		<nav className={s.nav}>
 
@@ -18,7 +15,7 @@ export const Navbar: FC<NavbarPropsType> = ({ state: { friendsData } }) => {
 				<li className={s.item}><NavLink activeClassName={s.active} to="/news">News</NavLink></li>
 				<li className={s.item}><NavLink activeClassName={s.active} to="/music">Music</NavLink></li>
 				<li className={s.item}><NavLink activeClassName={s.active} to="/settings">Settings</NavLink></li>
-				<li className={s.item}><NavLink activeClassName={s.active} to="/friends">Friends</NavLink><FavoritedFriends state={friendsData} /></li>
+				<li className={s.item}><NavLink activeClassName={s.active} to="/friends">Friends</NavLink></li>
 
 			</ul>
 

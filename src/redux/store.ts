@@ -4,17 +4,17 @@ import { friendsReducer } from "./friendsReducer"
 import { addPostAC, updateNewPostTextAC } from "./profileReducer"
 import { profileReducer } from "./profileReducer"
 
-export type DialogsDataType = {
+type DialogsDataType = {
 	name: string
 	id: string
 }
 
-export type MessagesDataType = {
+type MessagesDataType = {
 	id: string
 	message: string
 }
 
-export type PostsDataType = {
+type PostsDataType = {
 	message: string
 	likes: number
 	id: string
@@ -27,12 +27,12 @@ export type FriendsDataType = {
 	status: boolean
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
 	postsData: PostsDataType[],
 	newPostText: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
 	dialogsData: DialogsDataType[]
 	messagesData: MessagesDataType[]
 	newMessageText: string
@@ -123,7 +123,7 @@ export let store: StoreType = {
 				{ id: '4', name: 'Gey', age: 24, status: true },
 				{ id: '5', name: 'Apolo', age: 26, status: false },
 			]
-		}
+		},
 	},
 	_onChange() {
 		console.log('state changed')
@@ -166,8 +166,8 @@ export let store: StoreType = {
 
 	dispatch(action: ActionType) {
 
-		this._state.profilePage = profileReducer(this._state.profilePage, action)
-		this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+		// this._state.profilePage = profileReducer(this._state.profilePage, action)
+		// this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
 		this._state.friendsPage = friendsReducer(this._state.friendsPage, action)
 		this._onChange()
 
@@ -204,4 +204,3 @@ export let store: StoreType = {
 		// }
 	}
 }
-

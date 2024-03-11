@@ -2,27 +2,19 @@ import React, { FC } from 'react';
 import s from './Dialogs.module.css'
 import { Dialog } from './Dialog/Dialog';
 import { Message } from './Message/Message';
-import { ActionType, DialogsPageType } from '../../redux/state';
-import { sendMessageAC, updateNewMessageAC } from "../../redux/dialogsReducer";
+import { DialogsPropsType } from './DialogsContainer';
 
-type DialogsPropsType = {
-	state: DialogsPageType
-	// sendMessage: () => void
-	// updateNewMessage: (newMessage: string) => void
-	dispatch: (action: ActionType) => void
-}
-
-export const Dialogs: FC<DialogsPropsType> = ({ state: { dialogsData, messagesData, newMessageText }, dispatch }) => {
+export const Dialogs: FC<DialogsPropsType> = ({ sendMessage, updateNewMessage, dialogsPage: { dialogsData, messagesData, newMessageText } }) => {
 
 	const newMessage = React.createRef<HTMLTextAreaElement>()
 	const sendMessageHandler = () => {
-		dispatch(sendMessageAC())
-		// sendMessage()
+		if (newMessageText.trim() !== '') {
+			sendMessage()
+		}
 	}
 	const onChangeHandler = () => {
 		if (newMessage.current) {
-			// updateNewMessage(newMessage.current.value)
-			dispatch(updateNewMessageAC(newMessage.current.value))
+			updateNewMessage(newMessage.current.value)
 		}
 	}
 

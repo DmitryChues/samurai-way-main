@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FriendsDataType } from '../../../redux/state';
+import { FriendsDataType } from '../../../redux/store';
 import s from './FavoritedFriends.module.css'
 import { NavLink } from 'react-router-dom';
 
